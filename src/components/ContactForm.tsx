@@ -1,0 +1,167 @@
+import { useState } from "react";
+import { Check, Loader2 } from "lucide-react";
+
+export function ContactForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    message: ""
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Simulate form submission
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    console.log("Form submitted:", formData);
+    setIsSubmitting(false);
+    setIsSubmitted(true);
+
+    // Reset form after 3 seconds
+    setTimeout(() => {
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        message: ""
+      });
+      setIsSubmitted(false);
+    }, 3000);
+  };
+
+  if (isSubmitted) {
+    return (
+      <div className="form-success">
+        <div className="form-success-icon">
+          <Check style={{ width: '2rem', height: '2rem', color: '#16a34a' }} />
+        </div>
+        <h3>Message Sent!</h3>
+        <p>
+          Thank you for contacting us. We will get back to you within the next 24 hours.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="contact-form-card">
+      <div className="contact-form-header">
+        <h3>Request Your Free Consultation</h3>
+        <p>
+          Fill out the form and we will contact you to provide more information about our services and prices.
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="contact-form">
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="name" className="form-label">
+              Full Name <span className="form-required">*</span>
+            </label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              placeholder="John Doe"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="phone" className="form-label">
+              Phone <span className="form-required">*</span>
+            </label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              placeholder="+1 (555) 123-4567"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="email" className="form-label">
+            Email <span className="form-required">*</span>
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="johndoe@email.com"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            className="form-input"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="message" className="form-label">
+            Reason for Contact / Message <span className="form-required">*</span>
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Tell us about the treatment you are interested in or any questions you may have..."
+            value={formData.message}
+            onChange={handleChange}
+            required
+            className="form-textarea"
+          />
+          <p className="form-hint">
+            Example: "I'm interested in dental implants" or "I need information about veneers"
+          </p>
+        </div>
+
+        <div className="form-info-box">
+          <p><strong>📋 By submitting this form:</strong></p>
+          <ul>
+            <li>✓ You will receive a response in less than 24 hours</li>
+            <li>✓ We will send you a personalized treatment plan</li>
+            <li>✓ No commitment and completely free</li>
+          </ul>
+        </div>
+
+        <button 
+          type="submit" 
+          className="form-submit"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <>
+              <Loader2 className="animate-spin" style={{ width: '1rem', height: '1rem' }} />
+              Sending...
+            </>
+          ) : (
+            "Send Free Consultation"
+          )}
+        </button>
+
+        <p className="form-privacy">
+          Your data is protected. We do not share personal information with third parties.
+        </p>
+      </form>
+    </div>
+  );
+}
