@@ -17,7 +17,7 @@ export function Testimonials() {
     },
     {
       name: "Linda Malaise",
-      location: "Phoenix, Arizona",
+      location: "Fort Worth, Texas",
       rating: 5,
       text: "Awesome experience! Everyone was so nice. David was so helpful planning everything. The Dentist are amazing. Every step was explained perfectly. No pain at all. I'm extremely happy I chose Bencomo for my dental work. I will never go anywhere else. Thank you Bencomo!",
       image: linda
