@@ -69,7 +69,7 @@ export function Testimonials() {
         <div className="testimonials-grid">
           <div className="testimonial-card video-card">
             <video className="video" controls>
-              <source src="src/assets/img/testimony-video-en.mp4" type="video/mp4" />
+              <source src="/testimony-video-en.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
