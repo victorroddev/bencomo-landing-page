@@ -51,7 +51,7 @@ export const InsuranceModal: React.FC<InsuranceModalProps> = ({ isOpen, onClose 
     if (backFile) formData.set("backID", backFile.file);
 
     try {
-      const response = await fetch("/api/validate-insurance", {
+      const response = await fetch("https://mail.api.growy.tech/api/validate-insurance", {
         method: "POST",
         body: formData,
       });
