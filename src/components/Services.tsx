@@ -4,7 +4,7 @@ export function Services() {
       name: "Dental Implants",
       description: "Permanent solution for missing teeth with titanium implants and ceramic crowns",
       usPrice: "$3,500 - $6,000",
-      mexicoPrice: "$900 - $1,800",
+      mexicoPrice: "$1,900",
       savings: "70%",
       image: "https://images.unsplash.com/photo-1642844819197-5f5f21b89ff8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBkZW50YWwlMjBlcXVpcG1lbnR8ZW58MXx8fHwxNzcyNzE4OTk3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       popular: true

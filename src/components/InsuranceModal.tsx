@@ -1,5 +1,5 @@
 import React, { useState, FormEvent } from "react";
-import { X, ShieldCheck, AlertCircle, Upload, CheckCircle2, Mail, Phone } from "lucide-react";
+import { X, ShieldCheck, AlertCircle, Upload, CheckCircle2 } from "lucide-react";
 
 interface InsuranceModalProps {
   isOpen: boolean;
@@ -7,7 +7,7 @@ interface InsuranceModalProps {
 }
 
 export const InsuranceModal: React.FC<InsuranceModalProps> = ({ isOpen, onClose }) => {
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false); // Estado para la pantalla de éxito
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false); // State for success screen
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,39 +20,39 @@ export const InsuranceModal: React.FC<InsuranceModalProps> = ({ isOpen, onClose 
 
     const formData = new FormData(e.currentTarget);
     
-    // Simulación de envío a Flask
+    // Simulation of sending to Flask
     try {
-      console.log("Enviando a Flask...", Object.fromEntries(formData));
+      console.log("Sending to Flask...", Object.fromEntries(formData));
       
-      // Aquí irá tu fetch:
+      // Your fetch will go here:
       // await fetch('http://localhost:5000/validate', { method: 'POST', body: formData });
 
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Simular delay de red
-      setIsSubmitted(true); // Cambiamos a la pantalla de éxito
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate network delay
+      setIsSubmitted(true); // Switch to the success screen
     } catch (err) {
-      setError("Ocurrió un error al enviar los datos. Inténtalo de nuevo.");
+      setError("An error occurred while submitting the data. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  // --- RENDERIZADO DE PANTALLA DE ÉXITO ---
+  // --- SUCCESS SCREEN RENDER ---
   if (isSubmitted) {
     return (
       <div className="modal-overlay" onClick={onClose}>
         <div className="modal-card text-center" onClick={(e) => e.stopPropagation()}>
           <div className="flex flex-col items-center py-8">
             <CheckCircle2 size={64} className="text-green-500 mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900">¡Datos enviados con éxito!</h2>
+            <h2 className="text-2xl font-bold text-gray-900">Data Submitted Successfully!</h2>
             <p className="mt-4 text-gray-600 px-4">
-              Hemos recibido tu información correctamente. Nuestro equipo revisará tu cobertura y 
-              <strong> recibirás una respuesta en tu email en las próximas 24 horas.</strong>
+              We have received your information correctly. Our team will review your coverage and 
+              <strong> you will receive a response to your email within the next 24 hours.</strong>
             </p>
             <button 
               onClick={onClose} 
               className="mt-8 btn-submit w-full max-w-xs"
             >
-              Entendido
+              Understood
             </button>
           </div>
         </div>
@@ -60,7 +60,7 @@ export const InsuranceModal: React.FC<InsuranceModalProps> = ({ isOpen, onClose 
     );
   }
 
-  // --- RENDERIZADO DEL FORMULARIO ---
+  // --- FORM RENDER ---
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-card" onClick={(e) => e.stopPropagation()}>
@@ -68,8 +68,8 @@ export const InsuranceModal: React.FC<InsuranceModalProps> = ({ isOpen, onClose 
 
         <div className="modal-header">
           <ShieldCheck className="text-blue-600" size={32} />
-          <h2 className="text-xl font-bold">Validación de Aseguranza</h2>
-          <p className="text-sm text-gray-500">Completa el formulario para verificar tu cobertura en México.</p>
+          <h2 className="text-xl font-bold">Insurance Validation</h2>
+          <p className="text-sm text-gray-500">Complete the form to verify your coverage in Mexico.</p>
         </div>
 
         {error && (
@@ -80,36 +80,36 @@ export const InsuranceModal: React.FC<InsuranceModalProps> = ({ isOpen, onClose 
 
         <form onSubmit={handleSubmit} className="modal-form">
           <div className="form-group">
-            <label>Nombre Completo</label>
-            <input name="fullName" type="text" placeholder="Ej. Juan Pérez" required />
+            <label>Full Name</label>
+            <input name="fullName" type="text" placeholder="e.g. John Doe" required />
           </div>
 
           <div className="grid-inputs">
             <div className="form-group">
               <label>Email</label>
-              <input name="email" type="email" placeholder="tu@email.com" required />
+              <input name="email" type="email" placeholder="you@email.com" required />
             </div>
             <div className="form-group">
-              <label>Teléfono</label>
-              <input name="phone" type="tel" placeholder="+52..." required />
+              <label>Phone Number</label>
+              <input name="phone" type="tel" placeholder="+1..." required />
             </div>
           </div>
 
           <div className="form-group">
-            <label>Proveedor de Aseguranza</label>
-            <input name="provider" type="text" placeholder="Ej. Aetna, Delta Dental..." required />
+            <label>Insurance Provider</label>
+            <input name="provider" type="text" placeholder="e.g. Aetna, Delta Dental..." required />
           </div>
 
           <div className="grid-inputs">
             <div className="form-group">
-              <label>ID Aseguranza (Frente)</label>
+              <label>Insurance ID (Front)</label>
               <div className="file-input-wrapper">
                 <Upload size={14} />
                 <input name="frontID" type="file" accept="image/*" required />
               </div>
             </div>
             <div className="form-group">
-              <label>ID Aseguranza (Vuelta)</label>
+              <label>Insurance ID (Back)</label>
               <div className="file-input-wrapper">
                 <Upload size={14} />
                 <input name="backID" type="file" accept="image/*" required />
@@ -120,12 +120,12 @@ export const InsuranceModal: React.FC<InsuranceModalProps> = ({ isOpen, onClose 
           <div className="confidential-warning">
             <ShieldCheck size={20} className="text-blue-500 shrink-0" />
             <p>
-              <strong>Aviso de privacidad:</strong> Tus datos y documentos serán tratados de forma estrictamente confidencial bajo estándares de seguridad médica.
+              <strong>Privacy Notice:</strong> Your data and documents will be treated as strictly confidential under medical security standards.
             </p>
           </div>
 
           <button type="submit" className="btn-submit" disabled={loading}>
-            {loading ? "Procesando envío..." : "Enviar para Validación"}
+            {loading ? "Processing..." : "Send for Validation"}
           </button>
         </form>
       </div>
