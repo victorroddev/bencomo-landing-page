@@ -13,7 +13,7 @@ export function Services() {
       name: "Porcelain Veneers",
       description: "Transform your smile with custom-made porcelain veneers for a perfect Hollywood smile",
       usPrice: "$1,000 - $2,500",
-      mexicoPrice: "$350 - $700",
+      mexicoPrice: "$700",
       savings: "65%",
       image: "https://images.unsplash.com/photo-1655807946138-811bb2340d34?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZW50YWwlMjBzbWlsZSUyMGJlZm9yZSUyMGFmdGVyfGVufDF8fHx8MTc3MjcyNjcxOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
     },
@@ -29,7 +29,7 @@ export function Services() {
       name: "Root Canal Treatment",
       description: "Pain-free root canal therapy with modern techniques and sedation options",
       usPrice: "$800 - $1,500",
-      mexicoPrice: "$200 - $400",
+      mexicoPrice: "$ 300",
       savings: "70%",
       image: "https://images.unsplash.com/photo-1611690061822-b707a67bfebb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZW50aXN0JTIwcGF0aWVudCUyMHNtaWxpbmd8ZW58MXx8fHwxNzcyNjM3MDM0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
     },
@@ -37,7 +37,7 @@ export function Services() {
       name: "Dental Crowns & Bridges",
       description: "High-quality ceramic crowns and bridges for natural-looking restorations",
       usPrice: "$1,000 - $3,000",
-      mexicoPrice: "$300 - $800",
+      mexicoPrice: "600 - $800",
       savings: "65%",
       image: "https://images.unsplash.com/photo-1762625570087-6d98fca29531?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZW50YWwlMjBjbGluaWMlMjBtb2Rlcm4lMjBpbnRlcmlvcnxlbnwxfHx8fDE3NzI2MzIzMzh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
     },
@@ -45,7 +45,7 @@ export function Services() {
       name: "Teeth Whitening",
       description: "Professional teeth whitening for a brighter, more confident smile",
       usPrice: "$500 - $1,000",
-      mexicoPrice: "$150 - $300",
+      mexicoPrice: "$400",
       savings: "65%",
       image: "https://images.unsplash.com/photo-1655807946138-811bb2340d34?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZW50YWwlMjBzbWlsZSUyMGJlZm9yZSUyMGFmdGVyfGVufDF8fHx8MTc3MjcyNjcxOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
     }

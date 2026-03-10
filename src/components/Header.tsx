@@ -27,7 +27,7 @@ export function Header() {
           <div className="header-actions">
             <a href="tel:+1234567890" className="header-contact">
               <Phone style={{ width: '1rem', height: '1rem' }} />
-              <span>+1 (888) 123-4567</span>
+              <span>+1 (915) 920-3235</span>
             </a>
             <button className="btn btn-primary">Book Consultation</button>
           </div>

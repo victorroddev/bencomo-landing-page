@@ -1,11 +1,11 @@
 export function PriceComparison() {
   const procedures = [
-    { name: "Single Dental Implant", us: "$3,500 - $6,000", mexico: "$900 - $1,800", savings: "$2,600 - $4,200" },
-    { name: "Porcelain Veneer (per tooth)", us: "$1,000 - $2,500", mexico: "$350 - $700", savings: "$650 - $1,800" },
-    { name: "Dental Crown", us: "$1,000 - $3,000", mexico: "$300 - $800", savings: "$700 - $2,200" },
-    { name: "Root Canal", us: "$800 - $1,500", mexico: "$200 - $400", savings: "$600 - $1,100" },
-    { name: "All-on-4 Implants", us: "$20,000 - $40,000", mexico: "$6,000 - $12,000", savings: "$14,000 - $28,000" },
-    { name: "Teeth Whitening", us: "$500 - $1,000", mexico: "$150 - $300", savings: "$350 - $700" }
+    { name: "Single Dental Implant", us: "$3,500 - $6,000", mexico: "$1,900", savings: "$1,600 - $4,100" },
+    { name: "Porcelain Veneer (per tooth)", us: "$1,000 - $2,500", mexico: "$700", savings: "$300 - $1,800" },
+    { name: "Dental Crown", us: "$1,000 - $3,000", mexico: "$ 600", savings: "$400 - $2,400" },
+    { name: "Root Canal", us: "$800 - $1,500", mexico: "$300", savings: "$500 - $1,200" },
+    { name: "All-on-4 Implants", us: "$20,000 - $40,000", mexico: "$ 10,000", savings: "$10,000 - $30,000" },
+    { name: "Teeth Whitening", us: "$500 - $1,000", mexico: "$400", savings: "$100 - $600" }
   ];
 
   return (
@@ -50,12 +50,12 @@ export function PriceComparison() {
 
         <div className="price-stats">
           <div className="price-stat-card">
-            <div className="price-stat-value">50-70%</div>
+            <div className="price-stat-value">50-80%</div>
             <div className="price-stat-label">Average Savings</div>
             <div className="price-stat-description">On all procedures</div>
           </div>
           <div className="price-stat-card">
-            <div className="price-stat-value">$8,500</div>
+            <div className="price-stat-value">$12,000</div>
             <div className="price-stat-label">Average Total Saved</div>
             <div className="price-stat-description">Per patient visit</div>
           </div>

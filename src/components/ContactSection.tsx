@@ -27,9 +27,9 @@ export function ContactSection() {
                 <div className="contact-info-content">
                   <h4>Phone</h4>
                   <p>Call us Monday to Friday</p>
-                  <a href="tel:+18881234567">+1 (888) 123-4567</a>
+                  <a href="tel:+9159203235">+1 (915) 920-3235</a>
                   <br />
-                  <a href="tel:+525512345678">+52 (55) 1234-5678</a>
+                  <a href="tel:+526566098566">+52 (656)-609-8566</a>
                 </div>
               </div>
 
@@ -40,7 +40,7 @@ export function ContactSection() {
                 <div className="contact-info-content">
                   <h4>WhatsApp</h4>
                   <p>Immediate response 24/7</p>
-                  <a href="https://wa.me/18881234567">Send message</a>
+                  <a href="https://wa.me/526566098566">Send message</a>
                 </div>
               </div>
 
@@ -51,7 +51,7 @@ export function ContactSection() {
                 <div className="contact-info-content">
                   <h4>Email</h4>
                   <p>Response in 24 hours</p>
-                  <a href="mailto:info@smilemexico.com">info@smilemexico.com</a>
+                  <a href="mailto:info@smilemexico.com">info@bencomodentalclinic.com</a>
                 </div>
               </div>
 
@@ -91,11 +91,11 @@ export function ContactSection() {
                 prices, and coordinate your trip to Mexico.
               </p>
               <div className="contact-help-buttons">
-                <a href="tel:+18881234567" className="contact-help-button blue">
+                <a href="tel:+9159203235" className="contact-help-button blue">
                   <Phone style={{ width: '1rem', height: '1rem' }} />
                   Call Now
                 </a>
-                <a href="https://wa.me/18881234567" className="contact-help-button green">
+                <a href="https://wa.me/+16566098566" className="contact-help-button green">
                   <MessageCircle style={{ width: '1rem', height: '1rem' }} />
                   WhatsApp
                 </a>

@@ -25,7 +25,7 @@ export function CTA() {
             <Phone style={{ width: '2rem', height: '2rem' }} />
             <h3>Call Us</h3>
             <p>Speak with our team</p>
-            <a href="tel:+18881234567">+1 (888) 123-4567</a>
+            <a href="tel:+19159203235">+1 (915) 920-3235</a>
           </div>
 
           <div className="cta-card">
@@ -39,7 +39,7 @@ export function CTA() {
             <MessageCircle style={{ width: '2rem', height: '2rem' }} />
             <h3>WhatsApp</h3>
             <p>Chat instantly</p>
-            <a href="https://wa.me/18881234567">Message Now</a>
+            <a href="https://wa.me/5216566098566">Message Now</a>
           </div>
         </div>
 

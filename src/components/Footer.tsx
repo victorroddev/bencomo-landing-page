@@ -38,7 +38,7 @@ export function Footer() {
               <h4>Contact Info</h4>
               <div className="footer-contact-item">
                 <Phone style={{ width: '1rem', height: '1rem' }} />
-                <span>+1 (888) 123-4567</span>
+                <span>+1 (915) 920-32351</span>
               </div>
               <div className="footer-contact-item">
                 <Mail style={{ width: '1rem', height: '1rem' }} />
