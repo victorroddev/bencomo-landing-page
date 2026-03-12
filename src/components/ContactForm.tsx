@@ -1,5 +1,11 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Check, Loader2 } from "lucide-react";
+
+declare global {
+  interface Window {
+    turnstile: any;
+  }
+}
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -10,6 +16,25 @@ export function ContactForm() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [token, setToken] = useState<string>("");
+  const turnstileRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (turnstileRef.current && window.turnstile) {
+      const widgetId = window.turnstile.render(turnstileRef.current, {
+        sitekey: '0x4AAAAAACpk46o5TyzJHgcl',
+        callback: function(token: string) {
+          setToken(token);
+        },
+      });
+
+      return () => {
+        if (window.turnstile) {
+            window.turnstile.remove(widgetId);
+        }
+      };
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -19,44 +44,42 @@ export function ContactForm() {
     }));
   };
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setIsSubmitting(true);
-
-  try {
-    // Obtener token de Turnstile
-    const token = await window.turnstile.execute('.cf-turnstile', { action: 'contact' });
-    console.log("Turnstile Token:", token); // For debugging
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
     if (!token) {
-      throw new Error("Cloudflare Turnstile token not found. Please try again.");
+      alert("Security check has not completed. Please wait a moment and try again.");
+      return;
     }
+    
+    setIsSubmitting(true);
 
-    const response = await fetch("https://mail.api.growy.tech/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: formData.name,
-        email: formData.email,
-        message: `Phone: ${formData.phone}\n\n${formData.message}`,
-        cf_turnstile_response: token,
-      }),
-    });
+    try {
+      const response = await fetch("https://mail.api.growy.tech/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: `Phone: ${formData.phone}\n\n${formData.message}`,
+          "cf-turnstile-response": token,
+        }),
+      });
 
-    if (!response.ok) throw new Error("Server error");
+      if (!response.ok) throw new Error("Server error");
 
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setFormData({ name: "", phone: "", email: "", message: "" });
-      setIsSubmitted(false);
-    }, 3000);
-  } catch (err) {
-    console.error(err);
-    alert("An error occurred. Please try again.");
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setFormData({ name: "", phone: "", email: "", message: "" });
+        setIsSubmitted(false);
+      }, 3000);
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   if (isSubmitted) {
     return (
@@ -159,16 +182,12 @@ const handleSubmit = async (e: React.FormEvent) => {
           </ul>
         </div>
 
-        <div
-          className="cf-turnstile"
-          data-sitekey="0x4AAAAAACpk46o5TyzJHgcl"
-          data-execution="execute"
-        />
+        <div ref={turnstileRef} />
 
         <button 
           type="submit" 
           className="form-submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || !token}
         >
           {isSubmitting ? (
             <>
