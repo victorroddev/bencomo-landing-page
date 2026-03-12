@@ -1,11 +1,11 @@
 export function PriceComparison() {
   const procedures = [
     { name: "Single Dental Implant", us: "$3,500 - $6,000", mexico: "$1,900", savings: "$1,600 - $4,100" },
-    { name: "Porcelain Veneer (per tooth)", us: "$1,000 - $2,500", mexico: "$700", savings: "$300 - $1,800" },
-    { name: "Dental Crown", us: "$1,000 - $3,000", mexico: "$ 600", savings: "$400 - $2,400" },
-    { name: "Root Canal", us: "$800 - $1,500", mexico: "$300", savings: "$500 - $1,200" },
-    { name: "All-on-4 Implants", us: "$20,000 - $40,000", mexico: "$ 10,000", savings: "$10,000 - $30,000" },
-    { name: "Teeth Whitening", us: "$500 - $1,000", mexico: "$400", savings: "$100 - $600" }
+    { name: "Porcelain Veneer (per tooth)", us: "$1,000 - $2,500", mexico: "$500 - 700", savings: "$300 - $1,800" },
+    { name: "Dental Crown", us: "$1,000 - $3,000", mexico: "$ 500", savings: "$400 - $2,400" },
+    { name: "Root Canal", us: "$800 - $1,500", mexico: "$325", savings: "$500 - $1,200" },
+    { name: "All-on-4 Implants", us: "$20,000 - $40,000", mexico: "$ 10,000 - $15,000", savings: "$10,000 - $30,000" },
+    { name: "Teeth Whitening", us: "$500 - $1,000", mexico: "$300", savings: "$100 - $600" }
   ];
 
   return (

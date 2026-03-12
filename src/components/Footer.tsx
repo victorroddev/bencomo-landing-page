@@ -49,10 +49,10 @@ export function Footer() {
                 <span>Juárez, México</span>
               </div>
               <div className="footer-social">
-                <a href="#facebook" className="footer-social-link">
+                <a href="https://www.facebook.com/BencomoDentalClinicjrz" className="footer-social-link">
                   <Facebook style={{ width: '1rem', height: '1rem' }} />
                 </a>
-                <a href="#instagram" className="footer-social-link">
+                <a href="https://www.instagram.com/bencomodentalclinicjrz/" className="footer-social-link">
                   <Instagram style={{ width: '1rem', height: '1rem' }} />
                 </a>
               </div>

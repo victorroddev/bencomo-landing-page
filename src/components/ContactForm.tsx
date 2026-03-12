@@ -20,27 +20,34 @@ export function ContactForm() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  e.preventDefault();
+  setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
+  try {
+    const response = await fetch("https://mail.api.growy.tech/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: formData.name,
+        email: formData.email,
+        message: `Phone: ${formData.phone}\n\n${formData.message}`,
+      }),
+    });
 
-    console.log("Form submitted:", formData);
-    setIsSubmitting(false);
+    if (!response.ok) throw new Error("Server error");
+
     setIsSubmitted(true);
-
-    // Reset form after 3 seconds
     setTimeout(() => {
-      setFormData({
-        name: "",
-        phone: "",
-        email: "",
-        message: ""
-      });
+      setFormData({ name: "", phone: "", email: "", message: "" });
       setIsSubmitted(false);
     }, 3000);
-  };
+  } catch (err) {
+    console.error(err);
+    alert("An error occurred. Please try again.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   if (isSubmitted) {
     return (
