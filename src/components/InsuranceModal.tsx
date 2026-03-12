@@ -1,5 +1,5 @@
-import React, { useState, FormEvent } from "react";
-import { X, ShieldCheck, AlertCircle, Upload, CheckCircle2, ChevronDown, Camera, FolderOpen, Trash2 } from "lucide-react";
+import React, { useState, FormEvent, useEffect } from "react";
+import { X, ShieldCheck, AlertCircle, CheckCircle2, ChevronDown, Camera, FolderOpen, Trash2 } from "lucide-react";
 
 interface InsuranceModalProps {
   isOpen: boolean;
@@ -24,8 +24,15 @@ export const InsuranceModal: React.FC<InsuranceModalProps> = ({ isOpen, onClose 
   const [provider, setProvider] = useState("");
   const [frontFile, setFrontFile] = useState<{ file: File; preview: string } | null>(null);
   const [backFile, setBackFile] = useState<{ file: File; preview: string } | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState('');
 
   const isDeltaDental = provider.trim().toLowerCase().includes("delta");
+
+  useEffect(() => {
+    (window as any).onTurnstileInsuranceSuccess = (token: string) => {
+      setTurnstileToken(token);
+    };
+  }, []);
 
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -34,39 +41,41 @@ export const InsuranceModal: React.FC<InsuranceModalProps> = ({ isOpen, onClose 
     const file = e.target.files?.[0];
     if (!file) return;
     setter({ file, preview: URL.createObjectURL(file) });
-    // reset input so same file can be re-selected if cleared
     e.target.value = "";
   };
 
   if (!isOpen) return null;
 
-const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  setError(null);
-  setLoading(true);
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
 
-  try {
-    // Obtener token de Turnstile
-    const token = await window.turnstile.execute('.cf-turnstile', { action: 'contact' });
+    if (!turnstileToken) {
+      setError("Please wait for security verification to complete.");
+      return;
+    }
 
-    const formData = new FormData(e.currentTarget);
-    if (frontFile) formData.set("frontID", frontFile.file);
-    if (backFile) formData.set("backID", backFile.file);
-    formData.set("cf_turnstile_response", token);
+    setLoading(true);
 
-    const response = await fetch("https://mail.api.growy.tech/api/validate-insurance", {
-      method: "POST",
-      body: formData,
-    });
+    try {
+      const formData = new FormData(e.currentTarget);
+      if (frontFile) formData.set("frontID", frontFile.file);
+      if (backFile) formData.set("backID", backFile.file);
+      formData.set("cf_turnstile_response", turnstileToken);
 
-    if (!response.ok) throw new Error("Server error");
-    setIsSubmitted(true);
-  } catch (err) {
-    setError("An error occurred while submitting. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
+      const response = await fetch("https://mail.api.growy.tech/api/validate-insurance", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error("Server error");
+      setIsSubmitted(true);
+    } catch (err) {
+      setError("An error occurred while submitting. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (isSubmitted) {
     return (
@@ -117,7 +126,6 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         )}
 
         <form onSubmit={handleSubmit} style={styles.form}>
-          {/* --- DATOS DEL TITULAR --- */}
           <SectionLabel label="Policyholder Information" />
 
           <div style={styles.row}>
@@ -142,7 +150,6 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
             </Field>
           </div>
 
-          {/* --- DATOS DEL SEGURO --- */}
           <SectionLabel label="Insurance Information" />
 
           <div style={styles.row}>
@@ -168,7 +175,6 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
             </Field>
           </div>
 
-          {/* Delta Dental state selector */}
           {isDeltaDental && (
             <div style={styles.deltaAlert}>
               <div style={styles.deltaAlertHeader}>
@@ -190,7 +196,6 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
             </div>
           )}
 
-          {/* --- ID CARD UPLOADS --- */}
           <SectionLabel label="Insurance Card Photos" />
           <p style={styles.uploadNote}>
             Upload or take a photo of both sides of your insurance card.
@@ -211,7 +216,6 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
             />
           </div>
 
-          {/* Privacy notice */}
           <div style={styles.privacyNote}>
             <ShieldCheck size={15} color="#3b82f6" style={{ flexShrink: 0 }} />
             <p style={{ margin: 0, fontSize: 12, color: "#6b7280", lineHeight: 1.5 }}>
@@ -220,11 +224,11 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
             </p>
           </div>
 
+          {/* Turnstile widget */}
           <div
             className="cf-turnstile"
             data-sitekey="0x4AAAAAACpk46o5TyzJHgcl"
-              data-execution="execute"
-
+            data-callback="onTurnstileInsuranceSuccess"
           />
 
           <button type="submit" style={styles.submitBtn} disabled={loading}>
@@ -283,7 +287,6 @@ const ImageUploadField = ({
       </label>
 
       {value ? (
-        /* ── Preview state ── */
         <div style={imgPreviewStyles.wrapper}>
           <img src={value.preview} alt="preview" style={imgPreviewStyles.img} />
           <div style={imgPreviewStyles.overlay}>
@@ -297,9 +300,7 @@ const ImageUploadField = ({
           </div>
         </div>
       ) : (
-        /* ── Empty state: two action buttons ── */
         <div style={imgPreviewStyles.emptyWrapper}>
-          {/* Upload from gallery */}
           <label style={imgPreviewStyles.actionBtn} title="Upload from files">
             <FolderOpen size={15} />
             <span>Upload</span>
@@ -314,7 +315,6 @@ const ImageUploadField = ({
 
           <div style={imgPreviewStyles.divider} />
 
-          {/* Take photo */}
           <label style={imgPreviewStyles.actionBtn} title="Take a photo">
             <Camera size={15} />
             <span>Camera</span>
@@ -355,11 +355,7 @@ const imgPreviewStyles: Record<string, React.CSSProperties> = {
     transition: "background 0.15s",
     userSelect: "none",
   },
-  divider: {
-    width: 1,
-    background: "#e2e8f0",
-    alignSelf: "stretch",
-  },
+  divider: { width: 1, background: "#e2e8f0", alignSelf: "stretch" },
   wrapper: {
     borderRadius: 8,
     overflow: "hidden",
@@ -367,12 +363,7 @@ const imgPreviewStyles: Record<string, React.CSSProperties> = {
     background: "#f0f9ff",
     position: "relative" as const,
   },
-  img: {
-    width: "100%",
-    height: 90,
-    objectFit: "cover" as const,
-    display: "block",
-  },
+  img: { width: "100%", height: 90, objectFit: "cover" as const, display: "block" },
   overlay: {
     display: "flex",
     alignItems: "center",
@@ -405,7 +396,6 @@ const imgPreviewStyles: Record<string, React.CSSProperties> = {
   },
 };
 
-/* ── Styles ── */
 const styles: Record<string, React.CSSProperties> = {
   overlay: {
     position: "fixed",
@@ -434,11 +424,7 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "20px 20px 0",
     marginBottom: 16,
   },
-  headerLeft: {
-    display: "flex",
-    alignItems: "center",
-    gap: 12,
-  },
+  headerLeft: { display: "flex", alignItems: "center", gap: 12 },
   iconBadge: {
     background: "#0180AC",
     borderRadius: 10,
@@ -449,18 +435,8 @@ const styles: Record<string, React.CSSProperties> = {
     justifyContent: "center",
     flexShrink: 0,
   },
-  title: {
-    margin: 0,
-    fontSize: 17,
-    fontWeight: 700,
-    color: "#0f172a",
-    lineHeight: 1.2,
-  },
-  subtitle: {
-    margin: "2px 0 0",
-    fontSize: 12,
-    color: "#94a3b8",
-  },
+  title: { margin: 0, fontSize: 17, fontWeight: 700, color: "#0f172a", lineHeight: 1.2 },
+  subtitle: { margin: "2px 0 0", fontSize: 12, color: "#94a3b8" },
   closeBtn: {
     background: "none",
     border: "none",
@@ -483,17 +459,8 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 13,
     color: "#dc2626",
   },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 12,
-    padding: "0 20px 20px",
-  },
-  row: {
-    display: "flex",
-    gap: 10,
-    flexWrap: "wrap" as const,
-  },
+  form: { display: "flex", flexDirection: "column", gap: 12, padding: "0 20px 20px" },
+  row: { display: "flex", gap: 10, flexWrap: "wrap" as const },
   input: {
     width: "100%",
     padding: "9px 11px",
@@ -506,38 +473,14 @@ const styles: Record<string, React.CSSProperties> = {
     background: "#f8fafc",
     transition: "border-color 0.15s",
   },
-  fileLabel: {
-    display: "flex",
-    alignItems: "center",
-    gap: 7,
-    padding: "9px 11px",
-    borderRadius: 8,
-    border: "1.5px dashed #cbd5e1",
-    fontSize: 13,
-    color: "#64748b",
-    cursor: "pointer",
-    background: "#f8fafc",
-    width: "100%",
-    boxSizing: "border-box" as const,
-    overflow: "hidden",
-    whiteSpace: "nowrap" as const,
-    textOverflow: "ellipsis",
-  },
   deltaAlert: {
     background: "#eff6ff",
     border: "1.5px solid #bfdbfe",
     borderRadius: 10,
     padding: "10px 12px",
   },
-  deltaAlertHeader: {
-    display: "flex",
-    alignItems: "center",
-    gap: 6,
-    marginBottom: 2,
-  },
-  selectWrapper: {
-    position: "relative" as const,
-  },
+  deltaAlertHeader: { display: "flex", alignItems: "center", gap: 6, marginBottom: 2 },
+  selectWrapper: { position: "relative" as const },
   select: {
     width: "100%",
     padding: "9px 32px 9px 11px",
@@ -560,11 +503,7 @@ const styles: Record<string, React.CSSProperties> = {
     pointerEvents: "none" as const,
     color: "#64748b",
   },
-  uploadNote: {
-    margin: "-4px 0 0",
-    fontSize: 12,
-    color: "#94a3b8",
-  },
+  uploadNote: { margin: "-4px 0 0", fontSize: 12, color: "#94a3b8" },
   privacyNote: {
     display: "flex",
     alignItems: "flex-start",
@@ -603,12 +542,7 @@ const styles: Record<string, React.CSSProperties> = {
     justifyContent: "center",
     marginBottom: 16,
   },
-  successTitle: {
-    margin: "0 0 8px",
-    fontSize: 20,
-    fontWeight: 700,
-    color: "#0f172a",
-  },
+  successTitle: { margin: "0 0 8px", fontSize: 20, fontWeight: 700, color: "#0f172a" },
   successText: {
     margin: "0 0 24px",
     fontSize: 14,
