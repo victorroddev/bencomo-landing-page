@@ -19,11 +19,14 @@ export function ContactForm() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
   setIsSubmitting(true);
 
   try {
+    // Obtener token de Turnstile
+    const token = await (window as any).turnstile.execute('0x4AAAAAACpk46o5TyzJHgcl', {action: 'contact'});
+
     const response = await fetch("https://mail.api.growy.tech/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -31,6 +34,7 @@ export function ContactForm() {
         name: formData.name,
         email: formData.email,
         message: `Phone: ${formData.phone}\n\n${formData.message}`,
+        cf_turnstile_response: token,
       }),
     });
 
@@ -149,6 +153,12 @@ export function ContactForm() {
             <li>✓ No commitment and completely free</li>
           </ul>
         </div>
+
+        <div
+          className="cf-turnstile"
+          data-sitekey="0x4AAAAAACpk46o5TyzJHgcl"
+          data-size="invisible"
+        />
 
         <button 
           type="submit" 

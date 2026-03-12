@@ -40,30 +40,33 @@ export const InsuranceModal: React.FC<InsuranceModalProps> = ({ isOpen, onClose 
 
   if (!isOpen) return null;
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
+const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setError(null);
+  setLoading(true);
+
+  try {
+    // Obtener token de Turnstile
+    const token = await (window as any).turnstile.execute('0x4AAAAAACpk46o5TyzJHgcl', {action: 'insurance'});
 
     const formData = new FormData(e.currentTarget);
-    // Attach files manually since inputs are hidden/uncontrolled for camera flow
     if (frontFile) formData.set("frontID", frontFile.file);
     if (backFile) formData.set("backID", backFile.file);
+    formData.set("cf_turnstile_response", token);
 
-    try {
-      const response = await fetch("https://mail.api.growy.tech/api/validate-insurance", {
-        method: "POST",
-        body: formData,
-      });
+    const response = await fetch("https://mail.api.growy.tech/api/validate-insurance", {
+      method: "POST",
+      body: formData,
+    });
 
-      if (!response.ok) throw new Error("Server error");
-      setIsSubmitted(true);
-    } catch (err) {
-      setError("An error occurred while submitting. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+    if (!response.ok) throw new Error("Server error");
+    setIsSubmitted(true);
+  } catch (err) {
+    setError("An error occurred while submitting. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   if (isSubmitted) {
     return (
@@ -216,6 +219,12 @@ export const InsuranceModal: React.FC<InsuranceModalProps> = ({ isOpen, onClose 
               are treated as strictly confidential under medical security standards.
             </p>
           </div>
+
+          <div
+            className="cf-turnstile"
+            data-sitekey="0x4AAAAAACpk46o5TyzJHgcl"
+            data-size="invisible"
+          />
 
           <button type="submit" style={styles.submitBtn} disabled={loading}>
             {loading ? "Sending..." : "Submit for Verification"}
