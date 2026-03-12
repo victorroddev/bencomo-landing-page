@@ -1,5 +1,11 @@
-import React, { useState, FormEvent, useEffect } from "react";
+import React, { useState, FormEvent, useEffect, useRef } from "react";
 import { X, ShieldCheck, AlertCircle, CheckCircle2, ChevronDown, Camera, FolderOpen, Trash2 } from "lucide-react";
+
+declare global {
+  interface Window {
+    turnstile: any;
+  }
+}
 
 interface InsuranceModalProps {
   isOpen: boolean;
@@ -24,15 +30,29 @@ export const InsuranceModal: React.FC<InsuranceModalProps> = ({ isOpen, onClose 
   const [provider, setProvider] = useState("");
   const [frontFile, setFrontFile] = useState<{ file: File; preview: string } | null>(null);
   const [backFile, setBackFile] = useState<{ file: File; preview: string } | null>(null);
-  const [turnstileToken, setTurnstileToken] = useState('');
+  
+  const [token, setToken] = useState<string>("");
+  const turnstileRef = useRef<HTMLDivElement>(null);
 
   const isDeltaDental = provider.trim().toLowerCase().includes("delta");
 
   useEffect(() => {
-    (window as any).onTurnstileInsuranceSuccess = (token: string) => {
-      setTurnstileToken(token);
-    };
-  }, []);
+    if (isOpen && turnstileRef.current && window.turnstile) {
+      const widgetId = window.turnstile.render(turnstileRef.current, {
+        sitekey: '0x4AAAAAACpk46o5TyzJHgcl',
+        callback: function(token: string) {
+          setToken(token);
+        },
+      });
+
+      return () => {
+        if (window.turnstile) {
+          window.turnstile.remove(widgetId);
+          setToken(""); // Reset token when modal closes or re-renders
+        }
+      };
+    }
+  }, [isOpen]);
 
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -50,7 +70,7 @@ export const InsuranceModal: React.FC<InsuranceModalProps> = ({ isOpen, onClose 
     e.preventDefault();
     setError(null);
 
-    if (!turnstileToken) {
+    if (!token) {
       setError("Please wait for security verification to complete.");
       return;
     }
@@ -61,7 +81,7 @@ export const InsuranceModal: React.FC<InsuranceModalProps> = ({ isOpen, onClose 
       const formData = new FormData(e.currentTarget);
       if (frontFile) formData.set("frontID", frontFile.file);
       if (backFile) formData.set("backID", backFile.file);
-      formData.set("cf_turnstile_response", turnstileToken);
+      formData.set("cf_turnstile_response", token);
 
       const response = await fetch("https://mail.api.growy.tech/api/validate-insurance", {
         method: "POST",
@@ -223,15 +243,10 @@ export const InsuranceModal: React.FC<InsuranceModalProps> = ({ isOpen, onClose 
               are treated as strictly confidential under medical security standards.
             </p>
           </div>
+          
+          <div ref={turnstileRef} style={{ margin: "8px 0" }} />
 
-          {/* Turnstile widget */}
-          <div
-            className="cf-turnstile"
-            data-sitekey="0x4AAAAAACpk46o5TyzJHgcl"
-            data-callback="onTurnstileInsuranceSuccess"
-          />
-
-          <button type="submit" style={styles.submitBtn} disabled={loading}>
+          <button type="submit" style={getSubmitBtnStyle(loading, !!token)} disabled={loading || !token}>
             {loading ? "Sending..." : "Submit for Verification"}
           </button>
         </form>
@@ -252,7 +267,7 @@ const Field = ({
   required,
   children,
 }: {
-  label: string;
+  label:string;
   required?: boolean;
   children: React.ReactNode;
 }) => (
@@ -331,6 +346,33 @@ const ImageUploadField = ({
       )}
     </div>
   );
+};
+
+const getSubmitBtnStyle = (loading: boolean, hasToken: boolean): React.CSSProperties => {
+  const baseStyle = {
+    width: "100%",
+    padding: "11px",
+    borderRadius: 10,
+    border: "none",
+    background: "#0180AC",
+    color: "#fff",
+    fontWeight: 700,
+    fontSize: 14,
+    cursor: "pointer",
+    marginTop: 4,
+    letterSpacing: "0.01em",
+    transition: "opacity 0.2s, background-color 0.2s",
+  };
+
+  if (loading || !hasToken) {
+    return {
+      ...baseStyle,
+      cursor: "not-allowed",
+      opacity: 0.6,
+    };
+  }
+
+  return baseStyle;
 };
 
 const imgPreviewStyles: Record<string, React.CSSProperties> = {
@@ -513,19 +555,7 @@ const styles: Record<string, React.CSSProperties> = {
     borderRadius: 8,
     padding: "9px 11px",
   },
-  submitBtn: {
-    width: "100%",
-    padding: "11px",
-    borderRadius: 10,
-    border: "none",
-    background: "#0180AC",
-    color: "#fff",
-    fontWeight: 700,
-    fontSize: 14,
-    cursor: "pointer",
-    marginTop: 4,
-    letterSpacing: "0.01em",
-  },
+  
   successContent: {
     display: "flex",
     flexDirection: "column",
