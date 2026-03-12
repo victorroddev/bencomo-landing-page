@@ -26,6 +26,11 @@ const handleSubmit = async (e: React.FormEvent) => {
   try {
     // Obtener token de Turnstile
     const token = await window.turnstile.execute('.cf-turnstile', { action: 'contact' });
+    console.log("Turnstile Token:", token); // For debugging
+
+    if (!token) {
+      throw new Error("Cloudflare Turnstile token not found. Please try again.");
+    }
 
     const response = await fetch("https://mail.api.growy.tech/api/contact", {
       method: "POST",
