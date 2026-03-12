@@ -223,7 +223,6 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
           <div
             className="cf-turnstile"
             data-sitekey="0x4AAAAAACpk46o5TyzJHgcl"
-            data-size="invisible"
               data-execution="execute"
 
           />

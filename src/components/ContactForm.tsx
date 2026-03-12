@@ -157,7 +157,6 @@ const handleSubmit = async (e: React.FormEvent) => {
         <div
           className="cf-turnstile"
           data-sitekey="0x4AAAAAACpk46o5TyzJHgcl"
-          data-size="invisible"
           data-execution="execute"
         />
 
