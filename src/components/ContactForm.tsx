@@ -25,7 +25,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
   try {
     // Obtener token de Turnstile
-    const token = await (window as any).turnstile.execute('0x4AAAAAACpk46o5TyzJHgcl', {action: 'contact'});
+    const token = await window.turnstile.execute('.cf-turnstile', { action: 'contact' });
 
     const response = await fetch("https://mail.api.growy.tech/api/contact", {
       method: "POST",
@@ -158,6 +158,7 @@ const handleSubmit = async (e: React.FormEvent) => {
           className="cf-turnstile"
           data-sitekey="0x4AAAAAACpk46o5TyzJHgcl"
           data-size="invisible"
+          data-execution="execute"
         />
 
         <button 

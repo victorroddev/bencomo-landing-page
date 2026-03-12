@@ -47,7 +47,7 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 
   try {
     // Obtener token de Turnstile
-    const token = await (window as any).turnstile.execute('0x4AAAAAACpk46o5TyzJHgcl', {action: 'insurance'});
+    const token = await window.turnstile.execute('.cf-turnstile', { action: 'contact' });
 
     const formData = new FormData(e.currentTarget);
     if (frontFile) formData.set("frontID", frontFile.file);
@@ -224,6 +224,8 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
             className="cf-turnstile"
             data-sitekey="0x4AAAAAACpk46o5TyzJHgcl"
             data-size="invisible"
+              data-execution="execute"
+
           />
 
           <button type="submit" style={styles.submitBtn} disabled={loading}>
