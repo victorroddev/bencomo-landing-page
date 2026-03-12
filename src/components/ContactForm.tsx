@@ -62,7 +62,7 @@ export function ContactForm() {
           name: formData.name,
           email: formData.email,
           message: `Phone: ${formData.phone}\n\n${formData.message}`,
-          "cf-turnstile-response": token,
+          cf_turnstile_response: token,
         }),
       });
 
