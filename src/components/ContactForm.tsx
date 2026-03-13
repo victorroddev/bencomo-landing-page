@@ -20,38 +20,44 @@ export function ContactForm() {
   const turnstileRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (turnstileRef.current && window.turnstile) {
-      const widgetId = window.turnstile.render(turnstileRef.current, {
-        sitekey: '0x4AAAAAACpk46o5TyzJHgcl',
-        callback: function(token: string) {
-          setToken(token);
-        },
-      });
+    const renderWidget = () => {
+      if (turnstileRef.current && window.turnstile) {
+        const widgetId = window.turnstile.render(turnstileRef.current, {
+          sitekey: '0x4AAAAAACpk46o5TyzJHgcl',
+          callback: (t: string) => setToken(t),
+        });
+        return widgetId;
+      }
+    };
 
-      return () => {
-        if (window.turnstile) {
-            window.turnstile.remove(widgetId);
-        }
-      };
+    if (window.turnstile) {
+      const widgetId = renderWidget();
+      return () => { if (widgetId) window.turnstile?.remove(widgetId); };
     }
+
+    const interval = setInterval(() => {
+      if (window.turnstile) {
+        clearInterval(interval);
+        renderWidget();
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Token:", token);
+
     if (!token) {
       alert("Security check has not completed. Please wait a moment and try again.");
       return;
     }
-    
+
     setIsSubmitting(true);
 
     try {
@@ -184,8 +190,8 @@ export function ContactForm() {
 
         <div ref={turnstileRef} />
 
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           className="form-submit"
           disabled={isSubmitting || !token}
         >
