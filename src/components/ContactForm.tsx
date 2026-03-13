@@ -46,7 +46,7 @@ export function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    console.log("Token:", token);
     if (!token) {
       alert("Security check has not completed. Please wait a moment and try again.");
       return;
