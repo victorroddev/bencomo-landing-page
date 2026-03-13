@@ -103,9 +103,14 @@ export const InsuranceModal: React.FC<InsuranceModalProps> = ({ isOpen, onClose 
         body: formData,
       });
 
-      if (!response.ok) throw new Error("Server error");
+      if (!response.ok) {
+        const errorBody = await response.text();
+        console.error("API Error Response:", errorBody);
+        throw new Error(`Server error: ${response.status} ${response.statusText}`);
+      }
       setIsSubmitted(true);
     } catch (err) {
+      console.error("Form submission error:", err);
       setError("An error occurred while submitting. Please try again.");
     } finally {
       setLoading(false);

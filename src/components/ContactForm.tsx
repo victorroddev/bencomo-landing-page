@@ -72,7 +72,11 @@ export function ContactForm() {
         }),
       });
 
-      if (!response.ok) throw new Error("Server error");
+      if (!response.ok) {
+        const errorBody = await response.text();
+        console.error("API Error Response:", errorBody);
+        throw new Error(`Server error: ${response.status} ${response.statusText}`);
+      }
 
       setIsSubmitted(true);
       setTimeout(() => {
@@ -80,7 +84,7 @@ export function ContactForm() {
         setIsSubmitted(false);
       }, 3000);
     } catch (err) {
-      console.error(err);
+      console.error("Form submission error:", err);
       alert("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
