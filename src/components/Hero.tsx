@@ -1,5 +1,5 @@
 import { Check, ArrowRight } from "lucide-react";
-import heroImg from '../assets/img/header.jpg'
+import heroImg from '../assets/img/hero-img.webp'
 import { InsuranceModal } from "./InsuranceModal.tsx";
 import { useState } from "react";
 
@@ -43,14 +43,13 @@ export function Hero() {
             </div>
 
             <div className="hero-actions">
-              <button className="btn btn-primary btn-lg">
+              <a href='#contact' className="btn btn-primary btn-lg">
                 Get Free Consultation
                 <ArrowRight style={{ width: '1rem', height: '1rem' }} />
-              </button>
+              </a>
               <button 
               className="btn btn-outline btn-lg"
               onClick={toggleModal}
-              
               >
                 Validate Your Insurance
               </button>

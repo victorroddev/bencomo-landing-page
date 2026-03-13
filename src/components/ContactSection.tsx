@@ -77,7 +77,7 @@ export function ContactSection() {
                   <h4>Hours</h4>
                   <p>
                     Monday - Friday: 9:00 AM - 7:00 PM<br />
-                    Saturday: 9:00 AM - 3:00 PM<br />
+                    Saturday: 8:00 AM - 7:00 PM<br />
                     Sunday: Closed
                   </p>
                 </div>

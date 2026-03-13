@@ -29,7 +29,6 @@ export function Header() {
               <Phone style={{ width: '1rem', height: '1rem' }} />
               <span>+1 (915) 920-3235</span>
             </a>
-            <button className="btn btn-primary">Book Consultation</button>
           </div>
         </div>
       </div>

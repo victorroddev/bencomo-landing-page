@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 import logoFooter from '../assets/img/logo-white.webp'
 
 export function Footer() {
@@ -60,7 +61,7 @@ export function Footer() {
           </div>
 
           <div className="footer-bottom">
-            <p>&copy; 2026 Bencomo Dental Clinic. All rights reserved. | <a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms of Service</a></p>
+            <p>&copy; 2026 Bencomo Dental Clinic. All rights reserved. | <Link to="/privacy-policy">Privacy Policy</Link></p>
           </div>
         </div>
       </div>
