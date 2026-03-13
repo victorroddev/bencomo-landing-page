@@ -32,7 +32,7 @@ export function Services() {
         <div className="services-header">
           <h2>Our Team</h2>
           <p className="services-description">
-            Compare our affordable prices to typical US costs
+            Your smile is in expert hands
           </p>
         </div>
 
