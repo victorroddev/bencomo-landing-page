@@ -82,6 +82,14 @@ export function ContactForm() {
       setTimeout(() => {
         setFormData({ name: "", phone: "", email: "", message: "" });
         setIsSubmitted(false);
+        // Reset the Turnstile widget to get a new token for the next submission
+        if (turnstileRef.current) {
+          try {
+            window.turnstile?.reset(turnstileRef.current);
+          } catch (error) {
+            console.error("Failed to reset Turnstile widget:", error);
+          }
+        }
       }, 3000);
     } catch (err) {
       console.error("Form submission error:", err);
