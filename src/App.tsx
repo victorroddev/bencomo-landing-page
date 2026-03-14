@@ -10,6 +10,7 @@ import { ContactSection } from './components/ContactSection'
 import { Footer } from './components/Footer'
 import { PriceComparison } from './components/PriceComparison'
 import { PrivacyPolicy } from './components/PrivacyPolicy'
+import FloatingButtons from './components/FloatingButtons'
 
 function MainContent() {
     return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
         <Footer />
+        <FloatingButtons />
     </div>
     )
 }

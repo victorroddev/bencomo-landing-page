@@ -442,7 +442,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .service-content h3 {
   font-size: 1.25rem;
-  margin-bottom: 0.5 rem;
+  margin-bottom: 0.5rem;
   color: #111827;
 }
 
@@ -1015,7 +1015,9 @@ text-align: center;
 }
 
 .contact-info-card {
-  padding: 1.5rem;
+  padding-top: 1.5rem;
+  padding-left: 1.5rem;
+  padding-bottom: 1.5rem;
   width: 100%;
   display: flex;
   align-items: center;
@@ -1091,6 +1093,7 @@ text-align: center;
   background-color: #eff6ff;
   border: 1px solid #bfdbfe;
   border-radius: 0.5rem;
+  margin-top: 1rem;
 }
 
 .contact-help-card h4 {
