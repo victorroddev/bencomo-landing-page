@@ -4,6 +4,7 @@ import { Check, Loader2 } from "lucide-react";
 declare global {
   interface Window {
     turnstile: any;
+    gtag: (...args: any[]) => void; // Agregado para evitar errores de TS
   }
 }
 
@@ -78,11 +79,20 @@ export function ContactForm() {
         throw new Error(`Server error: ${response.status} ${response.statusText}`);
       }
 
+      // --- INTEGRACIÓN GOOGLE ADS ---
+      if (typeof window.gtag !== 'undefined') {
+        window.gtag('event', 'conversion', {
+          'send_to': 'AW-18006566966/qn5RCImrmogcELbQmYpD',
+          'value': 1.0,
+          'currency': 'MXN'
+        });
+      }
+      // ------------------------------
+
       setIsSubmitted(true);
       setTimeout(() => {
         setFormData({ name: "", phone: "", email: "", message: "" });
         setIsSubmitted(false);
-        // Reset the Turnstile widget to get a new token for the next submission
         if (turnstileRef.current) {
           try {
             window.turnstile?.reset(turnstileRef.current);
