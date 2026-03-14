@@ -32,7 +32,7 @@ export function CTA() {
             <Mail style={{ width: '2rem', height: '2rem' }} />
             <h3>Email Us</h3>
             <p>Get a quote in 24hrs</p>
-            <a href="mailto:info@bencomodentalclinic.com">info@bencomodentalclinic.com</a>
+            <a href="mailto:hralvarez@bencomodentalclinic.com">hralvarez@bencomodentalclinic.com</a>
           </div>
 
           <div className="cta-card">
