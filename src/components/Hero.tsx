@@ -84,7 +84,7 @@ export function Hero() {
                 </div>
                 <div>
                   <div className="hero-badge-text-small">Certified by</div>
-                  <div className="hero-badge-text-large">Some Certification</div>
+                  <div className="hero-badge-text-large">ADM</div>
                 </div>
               </div>
             </div>
