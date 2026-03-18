@@ -27,7 +27,7 @@ export function ContactSection() {
                 <div className="contact-info-content">
                   <h4>Phone</h4>
                   <p>Call us Monday to Friday</p>
-                  <a href="tel:+9159203235">+1 (915) 920-3235</a>
+                  <a href="tel:+19159203235">+1 (915) 920-3235</a>
                   <br />
                   <a href="tel:+526566098566">+52 (656)-609-8566</a>
                 </div>
@@ -91,7 +91,7 @@ export function ContactSection() {
                 prices, and coordinate your trip to Mexico.
               </p>
               <div className="contact-help-buttons">
-                <a href="tel:+9159203235" className="contact-help-button blue">
+                <a href="tel:+19159203235" className="contact-help-button blue">
                   <Phone style={{ width: '1rem', height: '1rem' }} />
                   Call Now
                 </a>
