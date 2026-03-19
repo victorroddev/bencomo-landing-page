@@ -11,6 +11,7 @@ import { Footer } from './components/Footer'
 import { PriceComparison } from './components/PriceComparison'
 import { PrivacyPolicy } from './components/PrivacyPolicy'
 import FloatingButtons from './components/FloatingButtons'
+import { PoliticaMeta } from './components/PoliticaMeta'
 
 function MainContent() {
     return (
@@ -33,6 +34,7 @@ function App() {
         <Routes>
             <Route path="/" element={<MainContent />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path='/politica-meta' element={<PoliticaMeta />} />
         </Routes>
         <Footer />
         <FloatingButtons />
