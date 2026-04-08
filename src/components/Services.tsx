@@ -25,14 +25,19 @@ export function Services() {
       image: "https://res.cloudinary.com/duzjv9n6g/image/upload/v1773436029/selma-perez_grnmmh.webp"
     },
     {
+      name: "Dr Carlos Beltrán",
+      description: "Orthodontist",
+      image: "https://res.cloudinary.com/duzjv9n6g/image/upload/v1773436030/carlos-beltrasn_jwg6ee.webp"
+    },
+    {
       name: "Jorge Ruiz",
-      description: "Periodoncia e implantologia ",
+      description: "Periodontics and Implantologys",
       image: "https://res.cloudinary.com/duzjv9n6g/image/upload/v1775674674/WhatsApp_Image_2026-03-31_at_4.28.57_PM_y1peex.jpg"
 
     },
     {
       name: "Jorge Perez Frutos",
-      description: "Cirujano Maxilofacial",
+      description: "Maxillofacial Surgeon",
       image: "https://res.cloudinary.com/duzjv9n6g/image/upload/v1775675098/jorge-perez_ivdvbs.jpg"
 
     },
