@@ -23,7 +23,19 @@ export function Services() {
       name: "Dr Selma Pérez ",
       description: "Pediatric Dentist",
       image: "https://res.cloudinary.com/duzjv9n6g/image/upload/v1773436029/selma-perez_grnmmh.webp"
-    }
+    },
+    {
+      name: "Jorge Ruiz",
+      description: "Periodoncia e implantologia ",
+      image: "https://res.cloudinary.com/duzjv9n6g/image/upload/v1775674674/WhatsApp_Image_2026-03-31_at_4.28.57_PM_y1peex.jpg"
+
+    },
+    {
+      name: "Jorge Perez Frutos",
+      description: "Cirujano Maxilofacial",
+      image: "https://res.cloudinary.com/duzjv9n6g/image/upload/v1775675098/jorge-perez_ivdvbs.jpg"
+
+    },
   ];
 
   return (
