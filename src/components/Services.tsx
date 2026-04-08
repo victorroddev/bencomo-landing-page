@@ -30,13 +30,13 @@ export function Services() {
       image: "https://res.cloudinary.com/duzjv9n6g/image/upload/v1773436030/carlos-beltrasn_jwg6ee.webp"
     },
     {
-      name: "Jorge Ruiz",
+      name: "Dr Jorge Ruiz",
       description: "Periodontics and Implantologys",
       image: "https://res.cloudinary.com/duzjv9n6g/image/upload/v1775674674/WhatsApp_Image_2026-03-31_at_4.28.57_PM_y1peex.jpg"
 
     },
     {
-      name: "Jorge Perez Frutos",
+      name: "Dr Jorge Perez Frutos",
       description: "Maxillofacial Surgeon",
       image: "https://res.cloudinary.com/duzjv9n6g/image/upload/v1775675098/jorge-perez_ivdvbs.jpg"
 
